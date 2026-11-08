@@ -1,0 +1,14 @@
+{
+  "name": "DicoManon",
+  "short_name": "DicoManon",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "./apple-touch-icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
