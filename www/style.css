@@ -1,0 +1,1008 @@
+/* Basic styles for the web app */
+/* modern dark theme with gradient accents */
+body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    margin: 0;
+    padding: 10px;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    height: 100vh;
+    overflow: hidden;
+    color: #e0e0e0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(45, 45, 50, 0.95) 100%);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 
+                0 0 1px rgba(255, 255, 255, 0.1) inset;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    height: calc(100vh - 20px);
+    display: flex;
+    flex-direction: column;
+}
+
+#mainContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* allow flex items to shrink */
+    overflow-y: auto;
+}
+
+/* responsive container */
+@media (max-width: 600px) {
+    body {
+        margin: 0;
+        padding: 5px;
+        height: 100vh;
+        overflow: hidden;
+    }
+    .container {
+        padding: 15px;
+        border-radius: 0;
+        max-width: 100%;
+        margin: 0;
+        height: calc(100vh - 10px);
+    }
+    #mainContent {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        overflow-y: auto;
+    }
+    /* only expand text inputs and selects, not icon buttons */
+    input[type="text"], select {
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 8px;
+        height: 44px;
+        font-size: 16px; /* prevent zoom on iOS */
+    }
+    button:not(.icon-btn) {
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 8px;
+        height: 44px;
+        font-size: 16px;
+    }
+    .icon-btn {
+        width: auto;
+        height: 44px;
+        padding: 10px 12px;
+        font-size: 16px;
+    }
+
+    /* responsive game page */
+    #gamePage {
+        padding: 1rem;
+    }
+    #gamePage h2 {
+        font-size: 1.4rem;
+        margin-bottom: 16px;
+    }
+    #wordToTranslate {
+        font-size: 1.4rem;
+    }
+    #prompt {
+        font-size: 1rem;
+        margin: 12px 0 10px;
+    }
+    #gameControls {
+        padding: 16px;
+        margin-bottom: 20px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+    #gameControls select {
+        height: 48px;
+        font-size: 16px;
+    }
+    #wordRow {
+        padding: 20px;
+        margin-bottom: 20px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+    #wordRow #wordToTranslate {
+        text-align: center;
+        margin-right: 0;
+        font-size: 1.6rem;
+    }
+    #answerSection {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 6px;
+        align-items: center;
+        justify-content: center;
+    }
+    #answerSection input[type="text"] {
+        flex: 1 1 auto;
+        min-width: 150px;
+        max-width: 100%;
+        height: 48px;
+        font-size: 16px;
+    }
+    #answerSection .icon-btn {
+        height: 44px;
+        padding: 8px 10px;
+        font-size: 18px;
+        flex: 0 0 auto;
+        width: auto;
+    }
+    #scoreDisplay {
+        padding: 12px;
+        margin: 16px 0;
+        background: linear-gradient(135deg, rgba(76, 175, 80, 0.05) 0%, rgba(33, 150, 243, 0.05) 100%);
+        border-radius: 8px;
+        border: 2px solid rgba(76, 175, 80, 0.3);
+    }
+    #scoreBarContainer {
+        height: 24px;
+        border-radius: 12px;
+        margin-bottom: 8px;
+    }
+    #scoreBar {
+        border-radius: 12px;
+        height: 100%;
+    }
+    #scoreText {
+        font-size: 1rem;
+        margin: 0;
+        color: #64b5f6;
+    }
+    #endGameDialog {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+    #endGameDialog.hidden {
+        display: none !important;
+    }
+    #endGameContent {
+        background: linear-gradient(135deg, rgba(30, 30, 30, 0.98) 0%, rgba(45, 45, 50, 0.98) 100%);
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+        text-align: center;
+        max-width: 90%;
+    }
+    #endGameContent h3 {
+        font-size: 1.5rem;
+        margin: 0 0 16px 0;
+        color: #90caf9;
+    }
+    #finalScore {
+        font-size: 1.2rem;
+        margin: 16px 0;
+        color: #64b5f6;
+    }
+    #endGameButtons {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 20px;
+    }
+    #endGameButtons button {
+        padding: 12px 20px;
+        font-size: 1rem;
+        background: linear-gradient(135deg, #90caf9 0%, #64b5f6 100%);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+    #endGameButtons button:active {
+        transform: scale(0.98);
+    }
+    #toolbar {
+        position: sticky;
+        top: calc(env(safe-area-inset-top, 0px) + 4px);
+        justify-content: center;
+        width: 100%;
+        margin: 0 0 8px 0;
+        gap: 4px;
+        padding: 8px;
+    }
+    #toolbar button {
+        font-size: 1.2rem;
+        padding: 8px;
+    }
+}
+
+h1 {
+    color: #90caf9;
+    text-align: center;
+    font-size: 1.8rem;
+    margin: 0 0 10px 0;
+    background: linear-gradient(135deg, #90caf9 0%, #64b5f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+}
+
+button {
+    padding: 11px 24px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.hidden {
+    display: none !important;
+}
+
+section {
+    margin-bottom: 10px;
+    padding: 12px;
+    background: rgba(102, 126, 234, 0.05);
+    border-radius: 12px;
+    border-left: 4px solid #667eea;
+    flex-shrink: 0;
+}
+
+label {
+    margin-right: 5px;
+    font-weight: 500;
+    color: #b3e5fc;
+    line-height: 1.1;
+}
+
+#entry-section label {
+    font-size: 13px;
+    margin-bottom: 0;
+}
+
+input[type="text"],
+select {
+    padding: 12px 16px;
+    border: 2px solid #404854;
+    border-radius: 10px;
+    background-color: rgba(30, 30, 30, 0.8);
+    color: #e0e0e0;
+    vertical-align: middle;
+    box-sizing: border-box;   /* include padding in height/width */
+    margin-right: 10px;
+    font-size: 15px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+select:focus {
+    outline: none;
+    border-color: #667eea;
+    background-color: rgba(102, 126, 234, 0.1);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.feedback {
+    font-style: italic;
+    color: #81c784;
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+/* Keep one message line reserved to avoid layout shift between answers. */
+#gameMessage {
+    min-height: 1.4em;
+    line-height: 1.4;
+    margin-bottom: 8px;
+}
+
+/* emphasize specific words in feedback */
+.highlight {
+    font-weight: bold;
+    color: #ffd54f;
+}
+
+#toggleList {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+#gamePlay button {
+    margin-right: 5px;
+    margin-top: 10px;
+}
+
+#questionRow {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+#prompt {
+    font-size: 1rem;
+    color: #81c784;
+    margin: 12px 0 8px;
+    text-align: center;
+    font-weight: 500;
+}
+
+#wordToTranslate {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffd54f;
+    margin-right: 16px;
+    text-shadow: 0 2px 8px rgba(255, 213, 79, 0.3);
+}
+
+/* title on game page styled like main title */
+#gamePage h2 {
+    color: #90caf9;
+    text-align: center;
+    margin: 0 0 16px 0;
+    font-size: 1.5rem;
+}
+
+#entry-section h2,
+#listHeader h2 {
+    color: #90caf9;
+    margin-bottom: 8px;
+}
+
+/* start button container centering and spacing */
+#startContainer {
+    margin-top: 6px;
+    text-align: center;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* nextQuestion now an icon button; base icon-btn rules cover most styling */
+#nextQuestion {
+    margin: 0;
+    font-size: 1.5rem;
+}
+#nextQuestion .material-icons {
+    font-size: 1.5rem;
+    color: inherit;
+}
+
+#feedbackControls {
+    display: flex;
+    gap: 12px;
+    margin: 12px 0;
+    padding: 12px;
+    background: rgba(76, 175, 80, 0.08);
+    border-radius: 10px;
+    border-left: 4px solid #81c784;
+}
+
+#removeWord {
+    color: #ef5350;             /* red */
+    background: transparent;     /* no background */
+    border: none;
+    font-size: 1.5rem;
+    padding: 4px;               /* match other icon buttons */
+    transition: all 0.3s ease;
+}
+#removeWord:hover {
+    color: #f44336;
+    transform: scale(1.15);
+}
+#removeWord .material-icons {
+    color: inherit; /* ensure icon matches button color */
+}
+
+#gameControls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding: 12px;
+    background: rgba(102, 126, 234, 0.08);
+    border-radius: 12px;
+    border: 2px solid rgba(102, 126, 234, 0.2);
+}
+
+#gameControls label, #gameControls select {
+    margin-bottom: 0;
+}
+
+#wordRow {
+    display: flex;
+    align-items: baseline; /* align the baseline of the word and the input */
+    gap: 16px;
+    margin-bottom: 16px;
+    padding: 16px;
+    background: linear-gradient(135deg, rgba(255, 235, 59, 0.05) 0%, rgba(255, 152, 0, 0.05) 100%);
+    border-radius: 12px;
+    border: 2px solid rgba(255, 235, 59, 0.2);
+}
+
+/* score styling fun */
+#scoreDisplay {
+    padding: 16px;
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.05) 0%, rgba(33, 150, 243, 0.05) 100%);
+    border-radius: 10px;
+    border: 2px solid rgba(76, 175, 80, 0.3);
+    margin: 16px 0;
+}
+#scoreBarContainer {
+    width: 100%;
+    height: 30px;
+    background: rgba(100, 100, 100, 0.2);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid rgba(144, 202, 249, 0.3);
+    margin-bottom: 12px;
+}
+#scoreBar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ef5350 0%, #ff9800 40%, #fdd835 70%, #66bb6a 100%);
+    border-radius: 15px;
+    transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 0 8px rgba(102, 187, 106, 0.5);
+}
+#scoreText {
+    font-size: 1.1rem;
+    text-align: center;
+    margin: 0;
+    color: #64b5f6;
+    font-weight: 600;
+}
+#endGameDialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+#endGameDialog.hidden {
+    display: none !important;
+}
+#endGameContent {
+    background: linear-gradient(135deg, rgba(30, 30, 30, 0.98) 0%, rgba(45, 45, 50, 0.98) 100%);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    text-align: center;
+    max-width: 500px;
+}
+#endGameContent h3 {
+    font-size: 2rem;
+    margin: 0 0 20px 0;
+    color: #90caf9;
+}
+#finalScore {
+    font-size: 1.4rem;
+    margin: 20px 0;
+    color: #64b5f6;
+}
+#endGameButtons {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    margin-top: 24px;
+    justify-content: center;
+}
+#endGameButtons button {
+    padding: 14px 28px;
+    font-size: 1rem;
+    background: linear-gradient(135deg, #90caf9 0%, #64b5f6 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    flex: 0 0 auto;
+}
+#endGameButtons button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(144, 202, 249, 0.4);
+}
+#endGameButtons button:active {
+    transform: scale(0.98);
+}
+#score.correct {
+    color: #81c784; /* green when updated */
+    animation: pop 0.3s ease;
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+#toolbar {
+    position: sticky;
+    top: calc(env(safe-area-inset-top, 0px) + 6px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-bottom: 12px;
+    background: rgba(30, 30, 30, 0.8);
+    padding: 12px;
+    border-radius: 12px;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+#toolbar button {
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #90caf9;
+    padding: 8px;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+/* visually hide elements while keeping them accessible */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+}
+
+
+.icon-btn {
+    padding: 8px 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;              /* match input height */
+    vertical-align: middle;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+    border: 2px solid rgba(102, 126, 234, 0.3);
+    position: relative;        /* for tooltip */
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.icon-btn:hover {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.4) 0%, rgba(118, 75, 162, 0.4) 100%);
+    border-color: rgba(102, 126, 234, 0.6);
+    transform: translateY(-2px);
+}
+.icon-btn:hover::after {
+    content: attr(title);
+    position: absolute;
+    top: -32px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: #90caf9;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 10;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+.icon-btn .material-icons {
+    font-size: 1.5rem;
+    margin-right: 4px;
+}
+
+#toolbar button:hover {
+    opacity: 0.8;
+}
+
+#direction {
+    margin-right: 10px;
+}
+
+#addTranslation {
+    display: inline-block;
+    margin: 8px auto 0 auto;
+    font-size: 2rem;
+    background: linear-gradient(135deg, #ff7043 0%, #ec407a 100%);
+    border: none;
+    border-radius: 10px;
+    padding: 8px 12px;
+    cursor: pointer;
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(255, 112, 67, 0.3);
+    transition: all 0.3s ease;
+    /* pulse animation only when used as icon button */
+}
+
+#addTranslation:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 112, 67, 0.5);
+}
+
+#addTranslation.icon-btn {
+    animation: pulse 0.8s infinite alternate;
+    background: linear-gradient(135deg, #ff7043 0%, #ec407a 100%); /* override transparent base */
+}
+
+/* smaller, quieter controls in feedback area */
+#feedbackControls button {
+    font-size: 0.95rem;
+    background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    animation: none;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+    transition: all 0.3s ease;
+}
+#feedbackControls button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(76, 175, 80, 0.5);
+}
+#feedbackControls #addTranslation {
+    background: linear-gradient(135deg, #ff7043 0%, #ec407a 100%);
+    box-shadow: 0 4px 12px rgba(255, 112, 67, 0.3);
+}
+#feedbackControls #addTranslation:hover {
+    box-shadow: 0 6px 16px rgba(255, 112, 67, 0.5);
+}
+/* ensure the trash icon remains transparent & red despite parent rule */
+#feedbackControls #removeWord {
+    background: transparent !important;
+    color: #ef5350;
+    border: none;
+    box-shadow: none;
+}
+
+/* transient tooltip for duplicate additions */
+.temp-tooltip {
+    position: absolute;
+    background: linear-gradient(135deg, #ff7043 0%, #ec407a 100%);
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    font-weight: 500;
+}
+.temp-tooltip.fade {
+    opacity: 0;
+}
+
+
+
+@keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.2); }
+}
+
+#addTranslation.hidden {
+    display: none !important;
+}
+
+#wordList {
+    margin-top: 10px;
+    list-style-type: disc;
+    padding-left: 20px;
+    color: #b3e5fc;
+    max-height: 150px;
+    overflow-y: auto;
+    background: rgba(102, 126, 234, 0.05);
+    padding: 12px 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+/* full-screen game page container */
+#gamePage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    color: #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    z-index: 2000;
+}
+#backToMain {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 1.8rem;
+    color: #90caf9;
+    transition: all 0.3s ease;
+}
+#backToMain:hover {
+    transform: scale(1.1);
+    color: #64b5f6;
+}
+
+/* answer row layout: compact input with submit button on right */
+#answerSection {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#answerSection input[type="text"] {
+    flex: 1 1 auto;
+    max-width: 60%;
+}
+#answerSection button {
+    flex: 0 0 auto;
+}
+
+/* layout for entry row */
+.input-row {
+    display: flex;
+    /* stack inputs vertically when used for entry section */
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    margin-bottom: 6px;
+    overflow-x: hidden;
+}
+
+#addWord {
+    margin-top: 8px;
+    align-self: flex-end;
+}
+
+/* keep previous responsive behavior for row elements used elsewhere */
+.input-row.horizontal {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    overflow-x: auto;
+}
+
+.separator {
+    width: 1px;
+    height: 24px;
+    background-color: #444;
+    margin: 0 6px;
+}
+
+/* full screen list overlay */
+#listView {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    color: #e0e0e0;
+    /* default to hidden; real display governed by .hidden class or toggled via script */
+    display: none;
+    flex-direction: column;
+    padding: 20px;
+    z-index: 2000;
+}
+
+#listView:not(.hidden) {
+    display: flex;
+}
+
+#listHeader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    position: relative;
+    padding-right: 0;
+}
+
+/* fixed back button overlapping toolbar area */
+#listView .fixed.back-icon {
+    position: fixed;
+    top: env(safe-area-inset-top, 10px);
+    left: env(safe-area-inset-left, 10px);
+    font-size: 1.8rem;
+    background: rgba(30, 30, 30, 0.8);
+    border: none;
+    color: #90caf9;
+    z-index: 2001; /* above list view */
+    padding: 8px 12px;
+    border-radius: 10px;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+#listView .fixed.back-icon:hover {
+    color: #64b5f6;
+    transform: scale(1.1);
+}
+
+#listHeader h2 {
+    flex: 1;
+    text-align: center;
+    margin: 0;
+}
+
+#fullWordList {
+    flex: 1;
+    width: 100%;
+    border-collapse: collapse;
+    display: flex;
+    flex-direction: column;
+}
+
+#fullWordList tbody {
+    flex: 1;
+    overflow-y: auto;
+    display: block;
+    max-height: calc(100vh - 100px); /* ensure room for header */
+}
+
+#fullWordList thead, #fullWordList tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+#fullWordList th, #fullWordList td {
+    padding: 8px;
+    border-bottom: 1px solid #505050;
+    vertical-align: middle;
+}
+
+#fullWordList td {
+    color: #b3e5fc;
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+/* inputs inside table rows */
+#fullWordList .row-edit {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: rgba(102, 126, 234, 0.1);
+    border: 1px solid #667eea;
+    color: #e0e0e0;
+    padding: 4px 6px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 13px;
+}
+
+#fullWordList button {
+    margin-left: 0;
+}
+
+/* single source of truth for add-word inputs */
+#entry-section .input-row input.compact-entry-input {
+    width: min(360px, 92%);
+    max-width: 100%;
+    height: 25px;
+    min-height: 25px;
+    padding: 2px 8px;
+    font-size: 12px;
+    line-height: 1.2;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* hard override for Electron: exact size on the two add-word fields */
+#frWord,
+#itWord {
+    height: 25px !important;
+    min-height: 25px !important;
+    max-height: 25px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    border-width: 1px !important;
+    font-size: 12px !important;
+    line-height: 11px !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    box-sizing: border-box !important;
+}
+
+@media (max-width: 600px) {
+    #entry-section .input-row input.compact-entry-input {
+        width: 100%;
+        max-width: 100%;
+        height: 25px;
+        min-height: 25px;
+        padding: 1px 8px;
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+
+    #frWord,
+    #itWord {
+        height: 25px !important;
+        min-height: 25px !important;
+        max-height: 25px !important;
+    }
+}
+
+/* inputs can shrink to avoid pushing button to next line */
+.input-row input[type="text"] {
+    flex: 1 1 100px;
+}
+
+.input-row .icon-btn {
+    flex: 0 0 auto;
+}
+
+.input-row label {
+    white-space: nowrap;
+}
+
+/* CSS for table actions column */
+.table-actions {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+#fullWordList .list-action-btn {
+    width: 30px;
+    min-width: 30px;
+    height: 30px;
+    min-height: 30px;
+    padding: 0;
+    border-width: 1px;
+}
+
+#fullWordList .list-action-btn .material-icons {
+    margin-right: 0;
+    font-size: 16px;
+    line-height: 1;
+}

@@ -1,0 +1,17 @@
+{
+  "name": "tidico-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "cd www && npm start"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.1.0"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.1.0",
+    "@capacitor/app": "^8.0.1",
+    "@capacitor/filesystem": "^8.1.2",
+    "@capawesome/capacitor-file-picker": "^8.0.2"
+  }
+}

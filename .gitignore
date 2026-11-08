@@ -1,0 +1,14 @@
+node_modules/
+
+.DS_Store
+.idea/
+.kotlin/
+*.keystore
+*.jks
+*.p12
+.env
+.env.*
+DicoManon.json
+DicoManon_*.json
+
+/android/signing.properties
