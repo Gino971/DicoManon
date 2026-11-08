@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Web App</title>
+    <!-- try explicit relative path and also provide a data URI fallback -->
+    <link rel="icon" href="./favicon.ico">
+    <link rel="icon" href="data:;base64,">
+    <!-- Google Material Icons for standard icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="mainContent">
+        <h1>Ti'dico de Manouchette</h1>
+
+        <div id="toolbar">
+            <button id="listToggleToolbar" title="Afficher la liste" class="icon-btn">≡</button>
+            <button id="exportDict" title="Exporter le dictionnaire" class="icon-btn">💾</button>
+            <button id="importDict" title="Importer un dictionnaire" class="icon-btn">📂</button>
+            <button id="resetGame" title="Réinitialiser" class="icon-btn">⟳</button>
+            <button id="quitGame" title="Quitter" class="icon-btn">×</button>
+        </div>
+        <!-- hidden file input for import -->
+        <label for="dictImportFile" class="sr-only">Importer un dictionnaire</label>
+        <input type="file" id="dictImportFile" accept=".json,.JSON,application/json,text/json" class="hidden">
+        <p id="importMessage" class="feedback hidden" aria-atomic="true" aria-live="polite"></p>
+
+        <!-- full screen list view -->
+        <div id="listView" class="hidden">
+            <!-- fixed back button top-left instead of quit cross -->
+            <button id="closeListView" class="icon-btn back-icon fixed" title="Retour"><span class="material-icons">arrow_back_ios</span></button>
+            <div id="listHeader">
+                <h2>Liste des mots</h2>
+            </div>
+            <table id="fullWordList">
+                <thead>
+                    <tr><th>Français</th><th>Italien</th><th></th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <section id="entry-section">
+        <h2>Ajouter au Dictionnaire</h2>
+        <div class="input-row">
+            <label for="frWord">Français :</label>
+            <input type="text" id="frWord" class="compact-entry-input" placeholder="bonjour">
+        </div>
+        <div class="input-row">
+            <label for="itWord">Italien :</label>
+            <input type="text" id="itWord" class="compact-entry-input" placeholder="ciao">
+        </div>
+        <button id="addWord" class="icon-btn" title="Ajouter">+</button>
+        <!-- list toggle removed from row; now in toolbar -->
+        <p id="entryMessage" class="feedback"></p>
+        <ul id="wordList" class="hidden"></ul>
+        </section>
+
+
+        <!-- start game button on main screen -->
+        <div id="startContainer">
+            <button id="startGame" class="icon-btn" title="Jouer"><span class="material-icons">play_arrow</span> Jouer</button>
+        </div>
+        </div> <!-- end mainContent -->
+
+        <!-- separate full-page game view -->
+        <div id="gamePage" class="hidden">
+            <button id="backToMain" class="icon-btn" title="Retour">
+                <span class="material-icons">arrow_back_ios</span>
+            </button>
+            <h2>Jeu de traduction</h2>
+            <div id="gameControls">
+                <label for="direction">Sens :</label>
+                <select id="direction">
+                    <option value="fr-it">français → italien</option>
+                    <option value="it-fr">italien → français</option>
+                    <option value="random">au hasard</option>
+                </select>
+            </div>
+            <div id="gamePlay" class="hidden">
+                <div id="prompt"></div>
+                <div id="wordRow">
+                    <div id="wordToTranslate"></div>
+                    <div id="answerSection">
+                        <label for="answerInput" class="sr-only">Votre traduction</label>
+                        <input type="text" id="answerInput" placeholder="Votre traduction" aria-label="Votre traduction">
+                        <button id="submitAnswer" class="icon-btn" title="Valider">✓</button>
+                        <button id="nextQuestion" class="icon-btn" title="Suivant">
+                            <span class="material-icons">arrow_forward</span>
+                        </button>
+                        <button id="removeWord" class="icon-btn hidden" title="Supprimer le mot"><span class="material-icons">delete</span></button>
+                    </div>
+                </div>
+                <p id="gameMessage" class="feedback"></p>
+                <div id="scoreDisplay">
+                    <div id="scoreBarContainer">
+                        <div id="scoreBar"></div>
+                    </div>
+                    <p id="scoreText"><span id="score">0</span>/<span id="total">0</span></p>
+                </div>
+                <div id="feedbackControls" class="hidden">
+                    <button id="addTranslation" class="hidden">Ajouter</button>
+                </div>
+            </div>
+            <div id="endGameDialog" class="hidden">
+                <div id="endGameContent">
+                    <h3>Partie terminée !</h3>
+                    <p id="finalScore"></p>
+                    <div id="endGameButtons">
+                        <button id="restartGameBtn" class="icon-btn">Recommencer</button>
+                        <button id="mainMenuBtn" class="icon-btn">Retour à l'accueil</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
